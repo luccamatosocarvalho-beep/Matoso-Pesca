@@ -1,0 +1,723 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Carrinho | Matoso Pesca</title>
+
+<style>
+:root {
+    --azul: #174A70;
+    --azul-escuro: #103650;
+    --azul-claro: #8DBBD6;
+    --azul-suave: #e5eff5;
+    --dourado: #d2a33d;
+    --fundo: #f6f9fb;
+    --texto: #263746;
+    --cinza: #687985;
+    --borda: #dce6ec;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+body {
+    background: var(--fundo);
+    color: var(--texto);
+    line-height: 1.5;
+}
+
+/* CABEÇALHO */
+
+header {
+    background: #fff;
+    padding: 18px 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--borda);
+    box-shadow: 0 3px 14px rgba(16, 54, 80, 0.07);
+}
+
+.logo {
+    color: var(--azul);
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-decoration: none;
+}
+
+.logo span {
+    color: var(--dourado);
+}
+
+.voltar {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    text-decoration: none;
+    color: var(--azul);
+    font-weight: 600;
+    transition: color 0.2s ease;
+}
+
+.voltar:hover {
+    color: var(--dourado);
+}
+
+/* TÍTULO E CONTEÚDO */
+
+.container {
+    max-width: 1200px;
+    margin: 45px auto;
+    padding: 0 20px;
+}
+
+.titulo {
+    margin-bottom: 30px;
+}
+
+.titulo h1 {
+    font-size: 32px;
+    line-height: 1.2;
+    color: var(--azul);
+    margin-bottom: 8px;
+    font-weight: 800;
+}
+
+.titulo p {
+    color: var(--cinza);
+}
+
+.conteudo {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 350px;
+    gap: 25px;
+    align-items: start;
+}
+
+/* PAINÉIS */
+
+.produtos,
+.resumo {
+    min-width: 0;
+    background: #fff;
+    border: 1px solid var(--borda);
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 4px 15px rgba(16, 54, 80, 0.06);
+}
+
+.produtos h2,
+.resumo h2 {
+    color: var(--azul);
+    font-size: 20px;
+    font-weight: 750;
+    margin-bottom: 22px;
+}
+
+/* PRODUTOS DO CARRINHO */
+
+.item {
+    display: grid;
+    grid-template-columns: 110px minmax(0, 1fr) auto;
+    gap: 20px;
+    align-items: center;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--borda);
+}
+
+.item:last-child {
+    border-bottom: none;
+}
+
+.item img {
+    width: 110px;
+    height: 110px;
+    object-fit: contain;
+    background: #f6f9fb;
+    border: 1px solid #edf2f5;
+    border-radius: 9px;
+    padding: 8px;
+}
+
+.item-info h3 {
+    font-size: 16px;
+    line-height: 1.4;
+    color: var(--texto);
+    margin-bottom: 8px;
+    font-weight: 700;
+}
+
+.preco {
+    color: var(--azul);
+    font-weight: 800;
+    font-size: 17px;
+}
+
+.quantidade {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 15px;
+}
+
+.quantidade button {
+    width: 32px;
+    height: 32px;
+    border: 1px solid var(--borda);
+    background: #fff;
+    color: var(--azul);
+    font-size: 19px;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.quantidade button:hover {
+    background: var(--azul);
+    color: #fff;
+    border-color: var(--azul);
+}
+
+.quantidade span {
+    min-width: 18px;
+    text-align: center;
+    font-weight: 700;
+}
+
+.item-direita {
+    text-align: right;
+}
+
+.subtotal-item {
+    font-weight: 800;
+    color: var(--azul);
+    margin-bottom: 12px;
+}
+
+.remover {
+    border: none;
+    background: none;
+    color: #c0392b;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.remover:hover {
+    text-decoration: underline;
+}
+
+/* RESUMO DO PEDIDO */
+
+.resumo {
+    position: sticky;
+    top: 20px;
+}
+
+.linha {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 17px;
+    color: var(--cinza);
+    font-size: 14px;
+}
+
+.linha span:last-child {
+    text-align: right;
+    color: var(--texto);
+    font-weight: 600;
+}
+
+.linha.total {
+    border-top: 1px solid var(--borda);
+    padding-top: 20px;
+    margin-top: 20px;
+    color: var(--azul);
+    font-size: 19px;
+    font-weight: 900;
+}
+
+.linha.total span {
+    color: var(--azul);
+    font-weight: 900;
+}
+
+.frete-info {
+    font-size: 12px;
+    color: var(--cinza);
+    margin-top: -8px;
+    margin-bottom: 20px;
+}
+
+.finalizar {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    border: 1px solid var(--azul);
+    border-radius: 7px;
+    background: var(--azul);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.finalizar:hover {
+    background: var(--azul-escuro);
+    border-color: var(--azul-escuro);
+    transform: translateY(-2px);
+}
+
+.continuar {
+    display: block;
+    text-align: center;
+    margin-top: 17px;
+    text-decoration: none;
+    color: var(--azul);
+    font-size: 13px;
+    font-weight: 700;
+    transition: color 0.2s ease;
+}
+
+.continuar:hover {
+    color: var(--dourado);
+}
+
+/* CARRINHO VAZIO */
+
+.vazio {
+    text-align: center;
+    padding: 55px 20px;
+    background: #fff;
+    border: 1px solid var(--borda);
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(16, 54, 80, 0.06);
+}
+
+.vazio .icone {
+    font-size: 55px;
+    margin-bottom: 15px;
+}
+
+.vazio h2 {
+    color: var(--azul);
+    margin-bottom: 10px;
+    font-weight: 800;
+}
+
+.vazio p {
+    color: var(--cinza);
+    margin-bottom: 25px;
+}
+
+.vazio a {
+    display: inline-block;
+    padding: 13px 25px;
+    background: var(--azul);
+    color: #fff;
+    text-decoration: none;
+    border: 1px solid var(--azul);
+    border-radius: 7px;
+    font-weight: 700;
+    transition: background-color 0.2s ease;
+}
+
+.vazio a:hover {
+    background: var(--azul-escuro);
+    border-color: var(--azul-escuro);
+}
+
+/* RODAPÉ */
+
+footer {
+    background: var(--azul-escuro);
+    color: #f4f8fb;
+    text-align: center;
+    padding: 25px 15px;
+    margin-top: 60px;
+    font-size: 13px;
+}
+
+/* ACESSIBILIDADE E RESPONSIVIDADE */
+
+a:focus-visible,
+button:focus-visible {
+    outline: 3px solid var(--dourado);
+    outline-offset: 3px;
+}
+
+@media (max-width: 850px) {
+    .conteudo {
+        grid-template-columns: 1fr;
+    }
+
+    .resumo {
+        position: static;
+    }
+}
+
+@media (max-width: 550px) {
+    header {
+        padding: 17px 5%;
+        gap: 12px;
+    }
+
+    .logo {
+        font-size: 17px;
+        letter-spacing: 1px;
+    }
+
+    .voltar {
+        font-size: 13px;
+        text-align: right;
+    }
+
+    .container {
+        margin: 30px auto;
+        padding: 0 12px;
+    }
+
+    .titulo h1 {
+        font-size: 26px;
+    }
+
+    .produtos,
+    .resumo {
+        padding: 17px;
+    }
+
+    .item {
+        grid-template-columns: 80px minmax(0, 1fr);
+        gap: 12px;
+    }
+
+    .item img {
+        width: 80px;
+        height: 90px;
+    }
+
+    .item-info h3 {
+        font-size: 14px;
+    }
+
+    .item-direita {
+        grid-column: 2;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+        text-align: left;
+    }
+
+    .subtotal-item {
+        margin: 0;
+        font-size: 14px;
+    }
+
+    .quantidade {
+        gap: 8px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <a href="index.html" class="logo">
+        MATOSO <span>PESCA</span>
+    </a>
+
+    <a href="index.html" class="voltar">
+        ← Continuar comprando
+    </a>
+</header>
+
+<main class="container">
+
+    <div class="titulo">
+        <h1>Meu carrinho</h1>
+        <p>Confira seus produtos antes de finalizar o pedido.</p>
+    </div>
+
+    <div id="area-carrinho"></div>
+
+</main>
+
+<footer>
+    <p>© 2026 Matoso Pesca - Tudo para sua paixão pela pesca.</p>
+</footer>
+
+<script>
+
+// CHAVE UTILIZADA PARA SALVAR O CARRINHO
+const CHAVE_CARRINHO = "carrinho";
+
+// CARREGAR PRODUTOS
+function carregarCarrinho() {
+    try {
+        const dados = JSON.parse(
+            localStorage.getItem(CHAVE_CARRINHO)
+        );
+
+        return Array.isArray(dados) ? dados : [];
+    } catch {
+        return [];
+    }
+}
+
+let carrinho = carregarCarrinho();
+
+// FORMATAR PREÇOS
+function formatarPreco(valor) {
+    return Number(valor).toLocaleString("pt-BR", {
+        style: "currency",
+        currency: "BRL"
+    });
+}
+
+// ATUALIZAR LOCAL STORAGE
+function salvarCarrinho() {
+    localStorage.setItem(
+        CHAVE_CARRINHO,
+        JSON.stringify(carrinho)
+    );
+}
+
+// ATUALIZAR PÁGINA
+function atualizarCarrinho() {
+
+    const area = document.getElementById("area-carrinho");
+
+    if (carrinho.length === 0) {
+
+        area.innerHTML = `
+            <div class="vazio">
+                <div class="icone">🛒</div>
+                <h2>Seu carrinho está vazio!</h2>
+                <p>Que tal encontrar os equipamentos ideais para sua próxima pescaria?</p>
+                <a href="index.html">Explorar produtos</a>
+            </div>
+        `;
+
+        return;
+    }
+
+    let subtotal = 0;
+    let quantidadeTotal = 0;
+
+    let produtosHTML = "";
+
+    carrinho.forEach((item, index) => {
+
+        const preco = Number(item.preco) || 0;
+        const quantidade = Math.max(1, Number(item.quantidade) || 1);
+        const totalItem = preco * quantidade;
+
+        subtotal += totalItem;
+        quantidadeTotal += quantidade;
+
+        const nome = escaparHTML(item.nome || "Produto");
+        const imagem = item.imagem || item.image || "";
+
+        produtosHTML += `
+            <div class="item">
+
+                <img
+                    src="${escaparHTML(imagem)}"
+                    alt="${nome}"
+                    onerror="this.style.visibility='hidden'"
+                >
+
+                <div class="item-info">
+
+                    <h3>${nome}</h3>
+
+                    <p class="preco">
+                        ${formatarPreco(preco)}
+                    </p>
+
+                    <div class="quantidade">
+
+                        <button onclick="alterarQuantidade(${index}, -1)">
+                            −
+                        </button>
+
+                        <span>${quantidade}</span>
+
+                        <button onclick="alterarQuantidade(${index}, 1)">
+                            +
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <div class="item-direita">
+
+                    <p class="subtotal-item">
+                        ${formatarPreco(totalItem)}
+                    </p>
+
+                    <button
+                        class="remover"
+                        onclick="removerProduto(${index})"
+                    >
+                        Remover
+                    </button>
+
+                </div>
+
+            </div>
+        `;
+    });
+
+    area.innerHTML = `
+
+        <div class="conteudo">
+
+            <section class="produtos">
+
+                <h2>Seus produtos (${quantidadeTotal})</h2>
+
+                ${produtosHTML}
+
+            </section>
+
+            <aside class="resumo">
+
+                <h2>Resumo do pedido</h2>
+
+                <div class="linha">
+                    <span>Produtos</span>
+                    <span>${formatarPreco(subtotal)}</span>
+                </div>
+
+                <div class="linha">
+                    <span>Frete</span>
+                    <span>A calcular</span>
+                </div>
+
+                <p class="frete-info">
+                    O valor do frete será definido na etapa de entrega.
+                </p>
+
+                <div class="linha total">
+                    <span>Subtotal</span>
+                    <span>${formatarPreco(subtotal)}</span>
+                </div>
+
+                <button class="finalizar" onclick="finalizarCompra()">
+                    FINALIZAR COMPRA
+                </button>
+
+                <a href="index.html" class="continuar">
+                    ← Continuar comprando
+                </a>
+
+            </aside>
+
+        </div>
+    `;
+}
+
+// EVITAR QUE NOMES OU IMAGENS INSERIDOS VIREM HTML
+function escaparHTML(valor) {
+    return String(valor).replace(/[&<>"']/g, caractere => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+    })[caractere]);
+}
+
+// AUMENTAR OU DIMINUIR QUANTIDADE
+function alterarQuantidade(index, valor) {
+
+    carrinho[index].quantidade =
+        (Number(carrinho[index].quantidade) || 1) + valor;
+
+    if (carrinho[index].quantidade <= 0) {
+        carrinho.splice(index, 1);
+    }
+
+    salvarCarrinho();
+    atualizarCarrinho();
+}
+
+// REMOVER PRODUTO
+function removerProduto(index) {
+
+    carrinho.splice(index, 1);
+
+    salvarCarrinho();
+    atualizarCarrinho();
+}
+
+// FINALIZAR COMPRA PELO WHATSAPP
+function finalizarCompra() {
+
+    if (carrinho.length === 0) {
+        return;
+    }
+
+    // NÚMERO DO WHATSAPP DA LOJA
+    const numeroWhatsApp = "5531999482442";
+
+    // CALCULAR SUBTOTAL
+    const subtotal = carrinho.reduce((total, item) => {
+        return total + (Number(item.preco) || 0) *
+            Math.max(1, Number(item.quantidade) || 1);
+    }, 0);
+
+    // MONTAR MENSAGEM
+    let mensagem = "Olá! Gostaria de finalizar meu pedido na Matoso Pesca.\n\n";
+    mensagem += "*Meu pedido:*\n";
+
+    carrinho.forEach(item => {
+
+        const quantidade = Math.max(1, Number(item.quantidade) || 1);
+        const preco = Number(item.preco) || 0;
+
+        mensagem += `- ${item.nome || "Produto"} | Quantidade: ${quantidade} | ${formatarPreco(preco * quantidade)}\n`;
+    });
+
+    mensagem += `\n*Subtotal: ${formatarPreco(subtotal)}*`;
+    mensagem += "\nFrete: a combinar.";
+    mensagem += "\n\nPoderiam me orientar sobre a entrega e o pagamento?";
+
+    // ABRIR WHATSAPP COM A MENSAGEM PREENCHIDA
+    const linkWhatsApp =
+        `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensagem)}`;
+
+    window.location.href = linkWhatsApp;
+}
+
+// INICIAR
+atualizarCarrinho();
+
+</script>
+
+</body>
+</html>
